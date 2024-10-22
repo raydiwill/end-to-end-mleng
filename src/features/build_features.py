@@ -44,4 +44,18 @@ def build_preprocessor() -> ColumnTransformer:
         verbose_feature_names_out=False,
     )
 
+    print("Preprocessor built!")
     return preprocessor
+
+
+def save_preprocessor(preprocessor: ColumnTransformer, path: str = "models/") -> None:
+    """ Save the preprocessor to disk
+
+    Args:
+        preprocessor (ColumnTransformer): preprocessor to save
+        path (str, optional): path to save the preprocessor. Defaults to "models/".
+    """
+
+    os.makedirs(path, exist_ok=True)
+    joblib.dump(preprocessor, os.path.join(path, "preprocessor.pkl"))
+    print(f"Preprocessor saved at {path}")
