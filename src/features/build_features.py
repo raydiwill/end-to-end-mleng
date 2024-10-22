@@ -74,3 +74,19 @@ def load_preprocessor(path: str = "models/") -> ColumnTransformer:
     preprocessor = joblib.load(os.path.join(path, "preprocessor.pkl"))
     print(f"Preprocessor loaded from {path}")
     return preprocessor
+
+
+def preprocess_data(data: pd.DataFrame, preprocessor: ColumnTransformer) -> pd.DataFrame:
+    """ Preprocess the data using the preprocessor
+
+    Args:
+        data (pd.DataFrame): data to preprocess
+        preprocessor (ColumnTransformer): preprocessor to use
+
+    Returns:
+        pd.DataFrame: preprocessed data
+    """
+
+    preprocessed_data = preprocessor.fit_transform(data)
+    print("Data preprocessed!")
+    return preprocessed_data
