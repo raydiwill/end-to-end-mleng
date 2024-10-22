@@ -59,3 +59,18 @@ def save_preprocessor(preprocessor: ColumnTransformer, path: str = "models/") ->
     os.makedirs(path, exist_ok=True)
     joblib.dump(preprocessor, os.path.join(path, "preprocessor.pkl"))
     print(f"Preprocessor saved at {path}")
+
+
+def load_preprocessor(path: str = "models/") -> ColumnTransformer:
+    """ Load the preprocessor from disk
+
+    Args:
+        path (str, optional): path to load the preprocessor. Defaults to "models/".
+
+    Returns:
+        ColumnTransformer: preprocessor loaded from disk
+    """
+
+    preprocessor = joblib.load(os.path.join(path, "preprocessor.pkl"))
+    print(f"Preprocessor loaded from {path}")
+    return preprocessor
