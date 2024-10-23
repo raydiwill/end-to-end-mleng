@@ -52,14 +52,14 @@ def build_preprocessor() -> ColumnTransformer:
 def save_preprocessor(
     preprocessor: ColumnTransformer,
     data: pd.DataFrame,
-    path: str = "models/preprocessor/",
+    path: str = "/Users/raydi/Desktop/Code/portfolio/end-to-end-mleng/models",
 ) -> None:
     """Fit the preprocessor using the provided data and save it to disk
 
     Args:
         preprocessor (ColumnTransformer): preprocessor to fit and save
         data (pd.DataFrame): data to fit the preprocessor
-        path (str, optional): path to save the preprocessor. Defaults to "models/".
+        path (str, optional): path to save the preprocessor. Defaults to "/Users/raydi/Desktop/Code/portfolio/end-to-end-mleng/models".
     """
     print(f"Fitting preprocessor to data...")
     preprocessor.fit(data)
@@ -71,11 +71,11 @@ def save_preprocessor(
     print(f"Preprocessor saved at {path}")
 
 
-def load_preprocessor(path: str = "models/preprocessor/") -> ColumnTransformer:
+def load_preprocessor(path: str = "/Users/raydi/Desktop/Code/portfolio/end-to-end-mleng/models") -> ColumnTransformer:
     """Load the preprocessor from disk
 
     Args:
-        path (str, optional): path to load the preprocessor. Defaults to "models/".
+        path (str, optional): path to load the preprocessor. Defaults to "/Users/raydi/Desktop/Code/portfolio/end-to-end-mleng/models".
 
     Returns:
         ColumnTransformer: preprocessor loaded from disk
@@ -106,7 +106,7 @@ def preprocess_data(
 
 def main():
     print("Reading data from 'data/raw/train.csv'...")
-    data = pd.read_csv("data/raw/train.csv")
+    data = pd.read_csv("/Users/raydi/Desktop/Code/portfolio/end-to-end-mleng/data/raw/train.csv")
     print("Data read successfully!")
 
     preprocessor = build_preprocessor()
@@ -115,9 +115,9 @@ def main():
     transform_processor = load_preprocessor()
     preprocessed_data = preprocess_data(data, transform_processor)
 
-    preprocess_data = pd.DataFrame(preprocessed_data)
+    preprocessed_data = pd.DataFrame(preprocessed_data)
     print("Saving preprocessed data to 'data/interim/preprocessed_data.csv'...")
-    preprocess_data.to_csv("data/interim/preprocessed_data.csv", index=False)
+    preprocessed_data.to_csv("data/interim/preprocessed_data.csv", index=False)
     print("Preprocessed data saved!")
 
 
