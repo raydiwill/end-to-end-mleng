@@ -95,7 +95,7 @@ def preprocess_data(
         pd.DataFrame: preprocessed data
     """
     print("Preprocessing data...")
-    preprocessed_data = preprocessor.fit_transform(data)
+    preprocessed_data = preprocessor.transform(data)
     print("Data preprocessed!")
     return preprocessed_data
 
