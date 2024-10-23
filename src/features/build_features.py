@@ -15,6 +15,7 @@ def build_preprocessor() -> ColumnTransformer:
     Returns:
         ColumnTransformer: preprocessor for the dataset
     """
+    print("Building preprocessor...")
 
     binary_cols = ["cb_person_default_on_file"]
     ordinal_cols = ["loan_grade"]
@@ -48,14 +49,19 @@ def build_preprocessor() -> ColumnTransformer:
     return preprocessor
 
 
-def save_preprocessor(preprocessor: ColumnTransformer, path: str = "models/") -> None:
-    """Save the preprocessor to disk
+def save_preprocessor(preprocessor: ColumnTransformer, data: pd.DataFrame, path: str = "models/preprocessor/") -> None:
+    """Fit the preprocessor using the provided data and save it to disk
 
     Args:
-        preprocessor (ColumnTransformer): preprocessor to save
+        preprocessor (ColumnTransformer): preprocessor to fit and save
+        data (pd.DataFrame): data to fit the preprocessor
         path (str, optional): path to save the preprocessor. Defaults to "models/".
     """
+    print(f"Fitting preprocessor to data...")
+    preprocessor.fit(data)
+    print(f"Preprocessor fitted!")
 
+    print(f"Saving preprocessor to {path}...")
     os.makedirs(path, exist_ok=True)
     joblib.dump(preprocessor, os.path.join(path, "preprocessor.pkl"))
     print(f"Preprocessor saved at {path}")
@@ -70,7 +76,7 @@ def load_preprocessor(path: str = "models/preprocessor/") -> ColumnTransformer:
     Returns:
         ColumnTransformer: preprocessor loaded from disk
     """
-
+    print(f"Loading preprocessor from {path}...")
     preprocessor = joblib.load(os.path.join(path, "preprocessor.pkl"))
     print(f"Preprocessor loaded from {path}")
     return preprocessor
@@ -88,24 +94,32 @@ def preprocess_data(
     Returns:
         pd.DataFrame: preprocessed data
     """
-
+    print("Preprocessing data...")
     preprocessed_data = preprocessor.fit_transform(data)
     print("Data preprocessed!")
     return preprocessed_data
 
 
 def main():
+    print("Reading data from 'data/processed/processed_data.csv'...")
     data = pd.read_csv("data/processed/processed_data.csv")
+    print("Data read successfully!")
+
     preprocessor = build_preprocessor()
 
+    print("Fitting preprocessor to data...")
     preprocessor.fit(data)
+    print("Preprocessor fitted!")
+
     save_preprocessor(preprocessor)
 
     transform_processor = load_preprocessor()
     preprocessed_data = preprocess_data(data, transform_processor)
 
     preprocess_data = pd.DataFrame(preprocessed_data)
+    print("Saving preprocessed data to 'data/interim/preprocessed_data.csv'...")
     preprocess_data.to_csv("data/interim/preprocessed_data.csv", index=False)
+    print("Preprocessed data saved!")
 
 
 if __name__ == "__main__":
