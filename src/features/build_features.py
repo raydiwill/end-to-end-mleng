@@ -117,7 +117,7 @@ def main():
 
     preprocessed_data = pd.DataFrame(preprocessed_data)
     print("Saving preprocessed data to 'data/interim/preprocessed_data.csv'...")
-    preprocessed_data.to_csv("data/interim/preprocessed_data.csv", index=False)
+    preprocessed_data.to_csv("/Users/raydi/Desktop/Code/portfolio/end-to-end-mleng/data/interim/preprocessed_data.csv", index=False)
     print("Preprocessed data saved!")
 
 
