@@ -61,7 +61,7 @@ def save_preprocessor(preprocessor: ColumnTransformer, path: str = "models/") ->
     print(f"Preprocessor saved at {path}")
 
 
-def load_preprocessor(path: str = "models/") -> ColumnTransformer:
+def load_preprocessor(path: str = "models/preprocessor/") -> ColumnTransformer:
     """Load the preprocessor from disk
 
     Args:
