@@ -49,7 +49,11 @@ def build_preprocessor() -> ColumnTransformer:
     return preprocessor
 
 
-def save_preprocessor(preprocessor: ColumnTransformer, data: pd.DataFrame, path: str = "models/preprocessor/") -> None:
+def save_preprocessor(
+    preprocessor: ColumnTransformer,
+    data: pd.DataFrame,
+    path: str = "models/preprocessor/",
+) -> None:
     """Fit the preprocessor using the provided data and save it to disk
 
     Args:
@@ -101,17 +105,12 @@ def preprocess_data(
 
 
 def main():
-    print("Reading data from 'data/processed/processed_data.csv'...")
-    data = pd.read_csv("data/processed/processed_data.csv")
+    print("Reading data from 'data/raw/train.csv'...")
+    data = pd.read_csv("data/raw/train.csv")
     print("Data read successfully!")
 
     preprocessor = build_preprocessor()
-
-    print("Fitting preprocessor to data...")
-    preprocessor.fit(data)
-    print("Preprocessor fitted!")
-
-    save_preprocessor(preprocessor)
+    save_preprocessor(preprocessor, data)
 
     transform_processor = load_preprocessor()
     preprocessed_data = preprocess_data(data, transform_processor)
