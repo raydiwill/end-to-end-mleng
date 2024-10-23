@@ -10,7 +10,7 @@ import os
 
 
 def build_preprocessor() -> ColumnTransformer:
-    """ Build a preprocessor for the dataset
+    """Build a preprocessor for the dataset
 
     Returns:
         ColumnTransformer: preprocessor for the dataset
@@ -49,7 +49,7 @@ def build_preprocessor() -> ColumnTransformer:
 
 
 def save_preprocessor(preprocessor: ColumnTransformer, path: str = "models/") -> None:
-    """ Save the preprocessor to disk
+    """Save the preprocessor to disk
 
     Args:
         preprocessor (ColumnTransformer): preprocessor to save
@@ -62,7 +62,7 @@ def save_preprocessor(preprocessor: ColumnTransformer, path: str = "models/") ->
 
 
 def load_preprocessor(path: str = "models/") -> ColumnTransformer:
-    """ Load the preprocessor from disk
+    """Load the preprocessor from disk
 
     Args:
         path (str, optional): path to load the preprocessor. Defaults to "models/".
@@ -76,8 +76,10 @@ def load_preprocessor(path: str = "models/") -> ColumnTransformer:
     return preprocessor
 
 
-def preprocess_data(data: pd.DataFrame, preprocessor: ColumnTransformer) -> pd.DataFrame:
-    """ Preprocess the data using the preprocessor
+def preprocess_data(
+    data: pd.DataFrame, preprocessor: ColumnTransformer
+) -> pd.DataFrame:
+    """Preprocess the data using the preprocessor
 
     Args:
         data (pd.DataFrame): data to preprocess
@@ -90,3 +92,21 @@ def preprocess_data(data: pd.DataFrame, preprocessor: ColumnTransformer) -> pd.D
     preprocessed_data = preprocessor.fit_transform(data)
     print("Data preprocessed!")
     return preprocessed_data
+
+
+def main():
+    data = pd.read_csv("data/processed/processed_data.csv")
+    preprocessor = build_preprocessor()
+
+    preprocessor.fit(data)
+    save_preprocessor(preprocessor)
+
+    transform_processor = load_preprocessor()
+    preprocessed_data = preprocess_data(data, transform_processor)
+
+    preprocess_data = pd.DataFrame(preprocessed_data)
+    preprocess_data.to_csv("data/interim/preprocessed_data.csv", index=False)
+
+
+if __name__ == "__main__":
+    main()
